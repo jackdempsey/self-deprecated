@@ -32,11 +32,8 @@ end
 
 
 class Merb < Thor
-
-  # options
-  
   # option to show matches that weren't found, ie. 'clean'
-  
+
   # ability to let user specify a lambda to execute to print out display stuff
   desc 'deprecations', 'Find deprecations in the code'
   def deprecations(dir_to_search='.')
@@ -52,15 +49,13 @@ class Merb < Thor
     results = recursive_search(dir_to_search,conversions.keys)
 
     conversions.each do |key, warning|
-      puts '--> ' + key.to_s.gsub('?-mix:','') # clean up what the regexp.to_s looks like
-      unless results[key] =~ /^$/
+      unless results[key].empty?
+        puts '--> ' + key.to_s.gsub('?-mix:','') # clean up what the regexp.to_s looks like
         puts "  !! " + warning + " !!"
         puts '  ' + '.' * (warning.length + 6)
         puts results[key]
-      else
-        puts "  Clean! Cheers for you!"
+        puts
       end
-      puts
     end
   end
   
