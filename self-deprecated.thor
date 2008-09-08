@@ -46,7 +46,7 @@ class Merb < Thor
       /redirect.*?return/ => "You want to 'return redirect(...)' not 'redirect and return'"
     }
 
-    results = recursive_search(dir_to_search,conversions.keys)
+    results = recursive_search(File.expand_path(dir_to_search),conversions.keys)
 
     conversions.each do |key, warning|
       unless results[key].empty?
