@@ -35,15 +35,7 @@ class Merb < Thor
   desc 'deprecations [DIRECTORY]', 'Find deprecations in the code'
   method_options :version => :optional
   def deprecations(dir_to_search='.')
-    conversions = {
-      'before_filter'   => 'Use before',
-      'after_filter'   => 'Use after',
-      'render :partial' => 'Use partial',
-      'redirect_to' => 'Use redirect',
-      'url_for' => 'Use url',
-      /redirect.*?return/ => "You want to 'return redirect(...)' not 'redirect and return'"
-    }
-
+    conversions = messages(options[:version])
     results = recursive_search(File.expand_path(dir_to_search),conversions.keys)
 
     conversions.each do |key, warning|
@@ -56,5 +48,17 @@ class Merb < Thor
       end
     end
   end
-  
+
+  private
+
+  def messages(version=nil)
+    conversions = {
+      'before_filter'   => 'Use before',
+      'after_filter'   => 'Use after',
+      'render :partial' => 'Use partial',
+      'redirect_to' => 'Use redirect',
+      'url_for' => 'Use url',
+      /redirect.*?return/ => "You want to 'return redirect(...)' not 'redirect and return'"
+    }
+  end
 end

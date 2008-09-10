@@ -8,4 +8,10 @@ describe Merb do
     ARGV.replace ["merb:deprecations"]
     silence(:stdout) { proc { Thor::Runner.start }.should_not raise_error }
   end
+
+  it "uses version if supplied" do
+    ARGV.replace ["merb:deprecations", '-v','0.9.5']
+    mock.instance_of(Merb).messages('0.9.5') { {'empty' => 'hash'} }
+    silence(:stdout) { Thor::Runner.start }
+  end
 end
