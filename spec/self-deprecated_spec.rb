@@ -14,4 +14,10 @@ describe Merb do
     mock.instance_of(Merb).messages('0.9.5') { {'empty' => 'hash'} }
     silence(:stdout) { Thor::Runner.start }
   end
+
+  it "does not use version if not supplied" do
+    ARGV.replace ["merb:deprecations"]
+    mock.instance_of(Merb).messages(nil) { {'empty' => 'hash'} }
+    silence(:stdout) { Thor::Runner.start }
+  end
 end
