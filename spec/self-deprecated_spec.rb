@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/spec_helper'
+require 'rubygems'
 require 'thor/runner'
 load File.join(File.dirname(__FILE__), "..", "self-deprecated.thor")
 
