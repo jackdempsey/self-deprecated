@@ -1,0 +1,10 @@
+== TODO
+
+* Add in Merb tasks to find deprecations
+* Add in support for specifying versions
+* Investigate looking at deprecated gems (ie merb-extlib)
+
+
+== 0.0.1, released 2008-09-09
+
+* Initial release
