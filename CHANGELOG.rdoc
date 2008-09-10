@@ -3,6 +3,8 @@
 * Add in Merb tasks to find deprecations
 * Add in support for specifying versions
 * Investigate looking at deprecated gems (ie merb-extlib)
+* option to show matches that weren't found, ie. 'clean'
+* ability to let user specify a lambda to execute to print out display stuff
 
 
 == 0.0.1, released 2008-09-09

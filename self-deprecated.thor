@@ -32,9 +32,7 @@ end
 
 
 class Merb < Thor
-  # option to show matches that weren't found, ie. 'clean'
 
-  # ability to let user specify a lambda to execute to print out display stuff
   desc 'deprecations', 'Find deprecations in the code'
   def deprecations(dir_to_search='.')
     conversions = {
