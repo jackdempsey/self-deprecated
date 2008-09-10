@@ -32,7 +32,7 @@ end
 
 
 class Merb < Thor
-
+  method_options :version => :optional
   desc 'deprecations', 'Find deprecations in the code'
   def deprecations(dir_to_search='.')
     conversions = {
