@@ -5,6 +5,7 @@ load File.join(File.dirname(__FILE__), "..", "self-deprecated.thor")
 
 describe Merb do
   it "runs deprecations" do
-    silence(:stdout) { lambda { Merb.new.deprecations }.should_not raise_error }
+    ARGV.replace ["merb:deprecations"]
+    silence(:stdout) { proc { Thor::Runner.start }.should_not raise_error }
   end
 end
