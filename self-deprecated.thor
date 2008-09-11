@@ -35,7 +35,7 @@ class Merb < Thor
   desc 'deprecations [DIRECTORY]', 'Find deprecations in the code'
   method_options :version => :optional
   def deprecations(dir_to_search='.')
-    conversions = messages(options[:version])
+    conversions = self.class.messages(options[:version])
     results = recursive_search(File.expand_path(dir_to_search),conversions.keys)
 
     conversions.each do |key, warning|
@@ -49,16 +49,30 @@ class Merb < Thor
     end
   end
 
-  private
 
-  def messages(version=nil)
-    conversions = {
-      'before_filter'   => 'Use before',
-      'after_filter'   => 'Use after',
-      'render :partial' => 'Use partial',
-      'redirect_to' => 'Use redirect',
-      'url_for' => 'Use url',
+  def self.always_messages
+    {
+      'before_filter'     => 'Use before',
+      'after_filter'      => 'Use after',
+      'render :partial'   => 'Use partial',
+      'redirect_to'       => 'Use redirect',
+      'url_for'           => 'Use url',
       /redirect.*?return/ => "You want to 'return redirect(...)' not 'redirect and return'"
     }
+  end
+
+  def self.versioned_messages
+    {'0.9.5' => {'foo' => 'bar'}}
+  end
+
+  def self.messages(version=nil)
+    # scan through the VERSIONED hash and select out the tasks that are less than or equal to the passed in version
+    if version
+      always_messages.merge(versioned_messages.inject({}) do |hash,val|
+        (val.first.delete('.').to_i <= version.delete('.').to_i) ? hash.merge(val.last) : hash
+      end)
+    else
+      always_messages.merge(versioned_messages.values.inject {|hash,val| hash.merge(val)})
+    end
   end
 end
