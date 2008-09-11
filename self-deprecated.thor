@@ -6,7 +6,7 @@ def recursive_search(dir,patterns, excludes=[/\.git/, /\.svn/, /,v$/, /\.cvs$/, 
 
   Find.find(dir) do |path|
     fb =  File.basename(path) 
-    next if excludes.any?{|e| fb =~ e}
+    next if excludes.any?{|e| path =~ e}
     if File.directory?(path)
       if fb =~ /\.{1,2}/ 
         Find.prune
