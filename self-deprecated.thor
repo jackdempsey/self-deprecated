@@ -50,7 +50,7 @@ class Merb < Thor
   end
 
 
-  def self.always_messages
+  def self.general_messages
     {
       'before_filter'     => 'Use before',
       'after_filter'      => 'Use after',
@@ -76,11 +76,11 @@ class Merb < Thor
   def self.messages(version=nil)
     # scan through the VERSIONED hash and select out the tasks that are less than or equal to the passed in version
     if version
-      always_messages.merge(versioned_messages.inject({}) do |hash,val|
+      general_messages.merge(versioned_messages.inject({}) do |hash,val|
         (val.first.delete('.').to_i <= version.delete('.').to_i) ? hash.merge(val.last) : hash
       end)
     else
-      always_messages.merge(versioned_messages.values.inject {|hash,val| hash.merge(val)})
+      general_messages.merge(versioned_messages.values.inject {|hash,val| hash.merge(val)})
     end
   end
 end
