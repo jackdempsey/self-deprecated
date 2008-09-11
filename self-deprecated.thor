@@ -62,7 +62,15 @@ class Merb < Thor
   end
 
   def self.versioned_messages
-    {'0.9.5' => {'foo' => 'bar'}}
+    {'0.9.6' =>
+        {
+          'form_tag' => 'Use form',
+          'submit_button' => 'Use submit',
+          %r{<%\s*form} => 'Use <%= form...',
+          %r{-\s*form} => 'Use = form...',
+          '_control' => 'If this is a form helper, use [field_type]_field instead'
+        }
+      }
   end
 
   def self.messages(version=nil)
